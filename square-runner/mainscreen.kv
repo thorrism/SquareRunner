@@ -1,0 +1,343 @@
+#:kivy 1.8.0
+<UpKey>:
+    pos: 100, 100
+    height: "38dp"
+    width: "60dp"
+    newSource: 'up1.png'
+
+    canvas:
+        Rectangle:
+            source: root.newSource
+            pos: self.pos
+            size: self.width, self.height
+
+
+<DownKey>:
+    pos: 100, 100
+    height: "46dp"
+    width: "65dp"
+    newSource: 'down1.png'
+    canvas:
+        Rectangle:
+            source: root.newSource
+            pos: self.pos
+            size: self.width, self.height
+
+<LeftKey>:
+    pos: 100, 100
+    height: "25dp"
+    width: "75dp"
+    newSource: 'left1.png'
+
+    canvas:
+        Rectangle:
+            source: root.newSource
+            pos: self.pos
+            size: self.width, self.height
+
+<RightKey>:
+    pos: 100, 100
+    height: "25dp"
+    width: "75dp"
+    newSource: 'right1.png'
+
+    canvas:
+        Rectangle:
+            source: root.newSource
+            pos: self.pos
+            size: self.width, self.height
+
+<PowerUp>:
+    height: "25dp"
+    width: "25dp"
+    newSource: 'star.png'
+
+    canvas:
+        Rectangle:
+            pos: self.pos
+            size: self.width, self.height
+            source: root.newSource
+
+<Pause>
+    canvas:
+        Color: 
+            rgb: (1, 1, 1)
+        Rectangle:
+            source: 'pause.png'
+            pos:self.pos
+            size: self.parent.width, self.parent.height
+
+<GameOver>
+    pos: self.parent.width / 20, self.parent.height / 3
+    size: self.parent.width-self.parent.width / 10, self.parent.height / 3
+    canvas:
+        Color:
+            rgba: (.5, .5, .5, .6)
+        Rectangle:
+            pos: 0, 0
+            size: self.parent.width, self.parent.height
+        Color: 
+            rgb: (1, 1, 1)
+        Rectangle:
+            source: 'replay.png'
+            pos: root.pos
+            size: root.size
+
+<PlayAgain>
+    height: "25dp"
+    width: "125dp"
+    pos: 100, 100
+    canvas:
+        Rectangle:
+            source: 'playagain.png'
+            size: self.width, self.height
+            pos: root.pos
+
+<Instructions>
+    height: "20dp"
+    width: "200dp"
+    pos: 100, 100
+    canvas:
+        Rectangle:
+            source: 'instructions.png'
+            size: root.width, root.height
+            pos: root.pos
+
+<Play>
+    height: "30dp"
+    width: "150dp"
+    pos: 100, 100
+    canvas:
+        Rectangle:
+            source: 'playGame.png'
+            size: root.width, root.height
+            pos: root.pos
+
+
+<MainMenu>
+    height: "45dp"
+    width: "200dp"
+    pos: (self.parent.width - (self.width*3)/2), self.parent.height / 3 + self.height + 5
+    canvas:
+        Rectangle:
+            source: 'mainmenu.png'
+            size: root.width, root.height
+            pos: root.pos
+
+<Player>:
+    height: "25dp"
+    width: "25dp"
+    pos: 100, 100
+    red: 0
+    green: 0
+    blue: 0
+    newSource: 'player.png'
+    canvas:
+        Color:   
+            rgb: 1, 1, 1
+        Rectangle:
+            pos: self.pos
+            size: root.width, root.height 
+            source: root.newSource
+        
+
+<ScoreBall>:
+    height: "25dp"
+    width: "25dp"
+    newSource: 'coin.png'
+    canvas:
+        Color:
+            rgba: (1, 1, 1, 1)
+        Ellipse:
+            pos: self.pos
+            size: root.width, root.height
+            source: root.newSource
+
+<Squares>:
+    pos: -100, -100
+    height: "25dp"
+    width: "25dp"
+    newSource: 'badguy1.png'
+    canvas:
+        Color:
+            rgb: 1, 1, 1
+        Rectangle:
+            pos:self.pos
+            size: root.width, root.height
+            source: root.newSource
+
+<Game>:
+    newSource: 'background1.png'
+    ball: score_ball
+    player: player_circle
+    upKey: up_key
+    downKey: down_key
+    leftKey: left_key
+    rightKey: right_key
+    powerUp: power_up
+
+    GridLayout:
+        canvas:
+            Color:
+                rgba: (1, 1, 1, 1)
+            Rectangle:
+                pos: 0, 0
+                size: self.width, self.height
+                source: self.parent.newSource
+
+        Player:
+            id: dead_ball
+            x: -1000
+
+        PowerUp:
+            id: power_up
+            x: -100
+            y: 500
+
+        Player:
+            id: player_circle
+            x: root.x+self.width
+            center_y: root.center_y
+
+        ScoreBall:
+            id: dead_ball
+            x: -1000
+        
+        ScoreBall:
+            id: score_ball
+            center: self.parent.center
+
+        UpKey:
+            id: up_key
+            x: (root.center_x)-self.width/2
+            y: (root.height/6)
+
+        DownKey:
+            id: down_key
+            x: (root.center_x-self.width/2)
+            y: (root.height/6-self.height*1.5)
+
+        LeftKey:
+            id: left_key
+            x: (root.center_x)-(self.width+self.width/2.25)
+            y: (root.height/6-self.height)
+
+        RightKey:
+            id: right_key
+            x: (root.center_x)+self.width/2
+            y: (root.height/6-self.height)
+
+        Label:
+            color: (1, 1, 1, 1)
+            font_size: "25sp"
+            font_name: "roboto.ttf"
+            x: self.width-8
+            top: root.top
+            text: "Score:  " + str(root.player.score)
+
+        Label:
+            color: (root.player.red, root.player.green, root.player.blue, 1)
+            font_size: "25sp"
+            font_name: "roboto.ttf"
+            x: self.width-5
+            top: root.top+2
+            text: "Score:  " + str(root.player.score)
+
+        Label:
+            color: (1, 1, 1, root.player.visible)
+            font_size: "40sp"
+            font_name: "roboto.ttf"
+            x: (root.width / 2) - 50
+            top: root.top - 50
+            text: str(root.player.countDown)
+
+<MenuScreen>:
+    instructionsBtn: instructions_btn
+    playBtn: play_btn
+    centerY: self.center_y
+    GridLayout:
+        canvas:
+            Color:
+                rgba: (1, 1, 1, 1)
+            Rectangle:
+                pos: 0, 0
+                size: self.width, self.height
+                source: 'backgroundmenu.png'
+
+        Instructions:
+            id: instructions_btn
+            x: root.center_x-self.width / 2
+            y: root.centerY
+
+        Play:
+            id: play_btn
+            x: root.center_x-self.width / 2
+            y: root.centerY - self.height*3.25
+
+<ReturnBtn>:
+    height: "50dp"
+    width: "150dp"
+    pos: 100, 100
+    canvas:
+        Rectangle:
+            size: root.width, root.height
+            pos: root.pos
+            source: 'return.png'
+
+<InstructionsScreen>:
+    returnBtn: return_btn
+
+    GridLayout:
+        canvas:
+            Rectangle:
+                size: root.width, root.height
+                source: 'instructionsbg.png'
+        ReturnBtn:
+            id: return_btn
+            x: root.center_x - self.width /2
+            y: self.height / 2
+
+<DeathScreen>
+    gameOver: game_over
+    playAgain: play_again
+    finalScore: 0
+    highScore: 0
+    labelX: self.center_x
+    labelY: self.center_y - 40
+
+    GridLayout:
+        GameOver:
+            id: game_over
+
+        PlayAgain:
+            id: play_again
+            x: root.center_x - self.width / 2
+            y: root.gameOver.y+self.height
+     
+        Label:
+            color: (1, .8, 0, 1)
+            font_size: "25sp"
+            x: root.labelX - self.width/2
+            y: root.labelY
+            font_name: "roboto.ttf"
+            text: "Score: " + str(root.finalScore)
+
+        Label:
+            color: (1, .8, 0, 1)
+            font_size: "25sp"
+            x: root.labelX - self.width/2
+            y: root.labelY - self.height/2
+            font_name: "roboto.ttf"
+            text: "Best: " + str(root.highScore)
+
+
+
+<SettingsScreen>:
+    GridLayout:
+        Button:
+            text: 'My settings button'
+            size: "25dp", "25dp"
+            pos: root.center_x+self.width, root.center_y
+        Button:
+            text: 'Back to menu'
+            on_press: root.manager.current = 'menu'

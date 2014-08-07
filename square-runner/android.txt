@@ -1,0 +1,3 @@
+title=Square Runner (beta)
+author=Lucas Crawford
+orientation=portrait
